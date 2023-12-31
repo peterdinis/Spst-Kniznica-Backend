@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using LibrarySPSTApi.Services;
+using LibrarySPSTApi.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +51,7 @@ builder.Services
         };
     });
 
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Add services to the container.
 
