@@ -11,12 +11,14 @@ public class AuthService: IAuthService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
+    private readonly JwtService _jwtService;
     
-    public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+    public AuthService(JwtService jwtService, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _configuration = configuration;
+        _jwtService = jwtService;
     }
 
     public async Task<AuthResponseDto> RegisterAsync(RegisterDto registerDto)
@@ -100,7 +102,7 @@ public class AuthService: IAuthService
             authClaims.Add(new Claim(ClaimTypes.Role, userRole));
         }
 
-        var token = GenerateNewJsonWebToken(authClaims);
+        var token = _jwtService.GenerateToken(authClaims); 
 
         return new AuthResponseDto()
         {
