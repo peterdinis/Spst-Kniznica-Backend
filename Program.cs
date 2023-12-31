@@ -9,7 +9,18 @@ using System.Text;
 using LibrarySPSTApi.Services;
 using LibrarySPSTApi.Interfaces;
 
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy  =>
+        {
+            policy.WithOrigins("http://localhost:3000");
+        });
+});
 
 builder.Services
     .AddIdentity<ApplicationUser, IdentityRole>()
@@ -96,7 +107,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 
 var app = builder.Build();
-
+app.UseCors(MyAllowSpecificOrigins);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
