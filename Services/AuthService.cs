@@ -12,14 +12,6 @@ public class AuthService: IAuthService
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
     private readonly JwtService _jwtService;
-    
-    public AuthService(JwtService jwtService, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
-    {
-        _userManager = userManager;
-        _roleManager = roleManager;
-        _configuration = configuration;
-        _jwtService = jwtService;
-    }
 
     public async Task<AuthResponseDto> RegisterAsync(RegisterDto registerDto)
     {
@@ -43,11 +35,7 @@ public class AuthService: IAuthService
 
         if (!createUserResult.Succeeded)
         {
-            var errorString = "User Creation Failed Beacause: ";
-            foreach (var error in createUserResult.Errors)
-            {
-                errorString += " # " + error.Description;
-            }
+            var errorString = createUserResult.Errors.Aggregate("User Creation Failed Beacause: ", (current, error) => current + (" # " + error.Description));
             return new AuthResponseDto()
             {
                 IsSucceed = false,
@@ -90,17 +78,13 @@ public class AuthService: IAuthService
 
         var authClaims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(ClaimTypes.Name, user.UserName!),
             new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim("JWTID", Guid.NewGuid().ToString()),
             new Claim("FirstName", user.FirstName),
             new Claim("LastName", user.LastName),
         };
-
-        foreach (var userRole in userRoles)
-        {
-            authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-        }
+        authClaims.AddRange(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole)));
 
         var token = _jwtService.GenerateToken(authClaims); 
 
