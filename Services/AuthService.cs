@@ -8,7 +8,7 @@ namespace LibrarySPSTApi.Services;
 
 public class AuthService: IAuthService
 {
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly UserManager<Student> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
     private readonly JwtService _jwtService;
@@ -39,8 +39,7 @@ public class AuthService: IAuthService
             return new AuthResponseDto()
             {
                 IsSucceed = false,
-                Message = errorString,
-                ApplicationUser = student
+                Message = errorString
             };
         }
         
