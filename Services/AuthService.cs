@@ -12,6 +12,8 @@ public class AuthService: IAuthService
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
     private readonly JwtService _jwtService;
+    
+    
 
     public async Task<AuthResponseDto> RegisterAsync(RegisterDto registerDto)
     {
@@ -48,8 +50,7 @@ public class AuthService: IAuthService
         return new AuthResponseDto()
         {
             IsSucceed = true,
-            Message = "User Created Successfully",
-            ApplicationUser = student
+            Message = "User Created Successfully"
         };
     }
 
@@ -90,8 +91,7 @@ public class AuthService: IAuthService
         return new AuthResponseDto()
         {
             IsSucceed = true,
-            Message = token,
-            ApplicationUser = user
+            Message = token
         };
         
     }

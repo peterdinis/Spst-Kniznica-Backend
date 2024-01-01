@@ -3,6 +3,8 @@ using LibrarySPSTApi.Interfaces;
 namespace LibrarySPSTApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
+// TODO: Fix auth later
+
 [ApiController]
 public class StudentController: ControllerBase
 {
