@@ -22,7 +22,7 @@ public class AuthService: IAuthService
             throw new Exception("User already exists");
         }
 
-        ApplicationUser newUser = new ApplicationUser()
+        Student student = new Student()
         {
             FirstName = registerDto.FirstName,
             LastName = registerDto.LastName,
@@ -31,7 +31,7 @@ public class AuthService: IAuthService
             SecurityStamp = Guid.NewGuid().ToString(),
         };
         
-        var createUserResult = await _userManager.CreateAsync(newUser, registerDto.Password);
+        var createUserResult = await _userManager.CreateAsync(student, registerDto.Password);
 
         if (!createUserResult.Succeeded)
         {
@@ -40,17 +40,17 @@ public class AuthService: IAuthService
             {
                 IsSucceed = false,
                 Message = errorString,
-                ApplicationUser = newUser
+                ApplicationUser = student
             };
         }
         
-        await _userManager.AddToRoleAsync(newUser, "USER");
+        await _userManager.AddToRoleAsync(student, "STUDENT");
 
         return new AuthResponseDto()
         {
             IsSucceed = true,
             Message = "User Created Successfully",
-            ApplicationUser = newUser,
+            ApplicationUser = student
         };
     }
 
