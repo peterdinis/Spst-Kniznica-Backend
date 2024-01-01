@@ -6,5 +6,4 @@ public class AuthResponseDto
 {
     public bool IsSucceed { get; set; }
     public string Message { get; set; }
-    public ApplicationUser? ApplicationUser { get; set; }
 }
