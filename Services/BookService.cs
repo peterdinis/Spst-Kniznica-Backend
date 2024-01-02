@@ -26,7 +26,7 @@ namespace LibrarySPSTApi.Services
 
         public async Task<Book?> AddBookAsync(Book? book)
         {
-            _dbContext.Books.Add(book);
+            _dbContext.Books.Add(book!);
             await _dbContext.SaveChangesAsync();
             return book;
         }
