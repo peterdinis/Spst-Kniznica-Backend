@@ -1,4 +1,4 @@
-﻿using LibrarySPSTApi.data;
+﻿using LibrarySPSTApi.Data;
 using Microsoft.EntityFrameworkCore;
 using LibrarySPSTApi.Entities;
 using LibrarySPSTApi.Interfaces;

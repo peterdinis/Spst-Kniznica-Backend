@@ -2,7 +2,7 @@
 using LibrarySPSTApi.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace LibrarySPSTApi.data;
+namespace LibrarySPSTApi.Data;
 
 public class DataContext: IdentityDbContext<ApplicationUser>
 {

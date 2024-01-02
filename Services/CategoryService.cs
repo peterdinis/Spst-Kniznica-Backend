@@ -1,6 +1,6 @@
 ﻿using LibrarySPSTApi.Entities;
 using LibrarySPSTApi.Interfaces;
-using LibrarySPSTApi.data;
+using LibrarySPSTApi.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibrarySPSTApi.Services
