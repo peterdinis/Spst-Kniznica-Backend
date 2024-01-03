@@ -10,13 +10,13 @@ public class Author
     [Key]
     public int Id { get; set; }
 
-    public string Name { get; set; }
-    
-    public string AuthorDescription { get; set; }
-    
-    public string AuthorImage { get; set; }
-    
-    public string LitPeriod { get; set; }
+    public string Name { get; set; } = null!;
+
+    public string AuthorDescription { get; set; } = null!;
+
+    public string AuthorImage { get; set; } = null!;
+
+    public string LitPeriod { get; set; } = null!;
     
     public DateTime Birth { get; set; }
     
