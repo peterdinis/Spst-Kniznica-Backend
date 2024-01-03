@@ -1,4 +1,4 @@
-using LibrarySPSTApi.data;
+using LibrarySPSTApi.Data;
 using LibrarySPSTApi.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
