@@ -14,6 +14,8 @@ public class Author
     
     public string AuthorDescription { get; set; }
     
+    public string AuthorImage { get; set; }
+    
     public string LitPeriod { get; set; }
     
     public DateTime Birth { get; set; }

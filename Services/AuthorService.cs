@@ -41,6 +41,7 @@ public class AuthorService
                 existingAuthor.LitPeriod = updatedAuthor.LitPeriod;
                 existingAuthor.Birth = updatedAuthor.Birth;
                 existingAuthor.Death = updatedAuthor.Death;
+                existingAuthor.AuthorImage = updatedAuthor.AuthorImage;
     
                 await _context.SaveChangesAsync();
             }
