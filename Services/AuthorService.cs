@@ -7,12 +7,6 @@ namespace LibrarySPSTApi.Services;
 public class AuthorService
 {
     private readonly DataContext _context;
-    
-        public AuthorService(DataContext context)
-        {
-            _context = context;
-        }
-    
         public async Task<List<Author>> GetAllAuthorsAsync()
         {
             return await _context.Authors.ToListAsync();

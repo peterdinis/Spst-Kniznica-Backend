@@ -21,7 +21,7 @@ namespace LibrarySPSTApi.Services
 
         public async Task<Book?> GetBookByIdAsync(int id)
         {
-            return await _dbContext.Books.FirstOrDefaultAsync(book => book!.Id == id);
+            return await _dbContext.Books.FirstOrDefaultAsync(book => book!.Id == id)! ?? throw new InvalidOperationException("Book not found");
         }
 
         public async Task<Book?> AddBookAsync(Book? book)
@@ -31,11 +31,12 @@ namespace LibrarySPSTApi.Services
             return book;
         }
 
-        public async Task<Book> UpdateBookAsync(int id, Book book)
-        {
-            var existingBook = await _dbContext.Books.FirstOrDefaultAsync(b => b!.Id == id);
+        public async Task < Book > UpdateBookAsync(int id, Book book) {
+            var existingBook = await _dbContext.Books.FirstOrDefaultAsync(b => b.Id == id);
 
             if (existingBook == null) return existingBook!;
+
+            // Update properties other than Id
             existingBook.Name = book.Name;
             existingBook.Description = book.Description;
             existingBook.AuthorName = book.AuthorName;
