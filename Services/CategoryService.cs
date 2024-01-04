@@ -5,16 +5,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibrarySPSTApi.Services
 {
-    public class CategoryService(DataContext context) : ICategoryService
+    public class CategoryService : ICategoryService
     {
-        private readonly DataContext _context = context ?? throw new ArgumentNullException(nameof(context)); // Replace with your DbContext
+        private readonly DataContext _context; // Replace with your DbContext
+
+        public CategoryService(DataContext context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+        }
 
         public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
             return await _context.Categories.ToListAsync();
         }
 
-        public async Task<Category> GetCategoryByIdAsync(int categoryId) => await _context.Categories.FirstOrDefaultAsync(c => c.Id == categoryId) ?? throw new InvalidOperationException("Category not found");
+        public async Task<Category> GetCategoryByIdAsync(int categoryId)
+        {
+            return await _context.Categories.FirstOrDefaultAsync(c => c.Id == categoryId);
+        }
 
         public async Task<Category> CreateCategoryAsync(Category category)
         {
@@ -28,7 +36,7 @@ namespace LibrarySPSTApi.Services
             var existingCategory = await _context.Categories.FirstOrDefaultAsync(c => c.Id == categoryId);
             if (existingCategory == null)
             {
-                throw new InvalidOperationException("Category not found");
+                return null; // Or handle as needed
             }
 
             existingCategory.Name = category.Name;
