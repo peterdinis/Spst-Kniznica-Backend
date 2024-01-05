@@ -14,8 +14,8 @@ public class Book
     public string Description { get; set; } = null!;
 
     public string AuthorName { get; set; } = null!;
-    
-    public int Pages { get; set; }
+
+    public string Pages { get; set; } = null!;
 
     public string Status { get; set; } = null!;
     
@@ -23,6 +23,8 @@ public class Book
 
     public string Image { get; set; } = null!;
 
-    public int Quantity { get; set; }
+    public string Quantity { get; set; } = null!;
+
+    public string Publisher { get; set; } = null!;
 
 }
