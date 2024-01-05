@@ -16,4 +16,11 @@ public class AuthorService(DataContext dbContext): IAuthorService
     {
         return await dbContext.Authors.FirstOrDefaultAsync(author => author!.Id == id)! ?? throw new InvalidOperationException("Author not found");
     }
+    
+    public async Task<Author?> CreateAuthorAsync(Author? author)
+    {
+        dbContext.Authors.Add(author!);
+        await dbContext.SaveChangesAsync();
+        return author;
+    }
 }

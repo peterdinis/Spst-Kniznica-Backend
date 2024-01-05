@@ -42,25 +42,6 @@ public class AuthorController : ControllerBase
         return CreatedAtAction(nameof(GetAuthorById), new { id = createdAuthor.Id }, createdAuthor);
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<Author>> UpdateAuthor(int id, Author updatedAuthor)
-    {
-        if (id != updatedAuthor.Id)
-        {
-            return BadRequest();
-        }
-
-        var author = await _authorService.GetAuthorByIdAsync(id);
-
-        if (author == null)
-        {
-            return NotFound();
-        }
-
-        var result = await _authorService.UpdateAuthorAsync(id, updatedAuthor);
-        return Ok(result);
-    }
-
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteAuthor(int id)
     {
