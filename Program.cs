@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using LibrarySPSTApi.Services;
 using LibrarySPSTApi.Interfaces;
+using LibrarySPSTApi.Middleware;
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -65,7 +66,7 @@ builder.Services
 
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 
 // Add services to the container.
@@ -112,6 +113,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 var app = builder.Build();
 app.UseCors(MyAllowSpecificOrigins);
+app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
