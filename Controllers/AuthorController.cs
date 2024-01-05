@@ -1,31 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LibrarySPSTApi.Entities;
+using LibrarySPSTApi.Interfaces;
 using LibrarySPSTApi.Services;
 
 namespace LibrarySPSTApi.Controllers;
 
 [Route("Authors")]
 [ApiController]
-public class AuthorController : ControllerBase
+public class AuthorController(IAuthorService authorService) : ControllerBase
 {
-    private readonly AuthorService _authorService;
-
-    public AuthorController(AuthorService authorService)
-    {
-        _authorService = authorService;
-    }
-
     [HttpGet]
     public async Task<ActionResult<List<Author>>> GetAllAuthors()
     {
-        var authors = await _authorService.GetAllAuthorsAsync();
+        var authors = await authorService.GetAllAuthorsAsync();
         return Ok(authors);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Author>> GetAuthorById(int id)
     {
-        var author = await _authorService.GetAuthorByIdAsync(id);
+        var author = await authorService.GetAuthorByIdAsync(id);
 
         if (author == null)
         {
@@ -38,21 +32,21 @@ public class AuthorController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Author>> CreateAuthor(Author newAuthor)
     {
-        var createdAuthor = await _authorService.CreateAuthorAsync(newAuthor);
+        var createdAuthor = await authorService.CreateAuthorAsync(newAuthor);
         return CreatedAtAction(nameof(GetAuthorById), new { id = createdAuthor.Id }, createdAuthor);
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteAuthor(int id)
     {
-        var author = await _authorService.GetAuthorByIdAsync(id);
+        var author = await authorService.GetAuthorByIdAsync(id);
 
         if (author == null)
         {
             return NotFound();
         }
 
-        var deleted = await _authorService.DeleteAuthorAsync(id);
+        var deleted = await authorService.DeleteAuthorAsync(id);
 
         if (deleted)
         {
