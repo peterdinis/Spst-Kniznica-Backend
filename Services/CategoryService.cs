@@ -14,17 +14,17 @@ namespace LibrarySPSTApi.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
+        public async Task<IEnumerable<Category?>> GetAllCategoriesAsync()
         {
             return await _context.Categories.ToListAsync();
         }
 
-        public async Task<Category> GetCategoryByIdAsync(int categoryId)
+        public async Task<Category?> GetCategoryByIdAsync(int categoryId)
         {
             return await _context.Categories.FirstOrDefaultAsync(c => c.Id == categoryId);
         }
 
-        public async Task<Category> CreateCategoryAsync(Category category)
+        public async Task<Category?> CreateCategoryAsync(Category? category)
         {
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();

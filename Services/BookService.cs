@@ -9,7 +9,7 @@ namespace LibrarySPSTApi.Services
     {
         public async Task<IEnumerable<Book?>> GetAllBooksAsync()
         {
-            return await dbContext.Books.ToListAsync();
+            return await dbContext.Books.Include(book =>book.Category).ToListAsync();
         }
 
         public async Task<Book?> GetBookByIdAsync(int id)
@@ -19,6 +19,14 @@ namespace LibrarySPSTApi.Services
 
         public async Task<Book?> AddBookAsync(Book? book)
         {
+            // Check if the category associated with the book exists
+            var categoryExists = await dbContext.Categories.AnyAsync(c => book != null && c.Id == book.CategoryId);
+
+            if (!categoryExists)
+            {
+                return null; 
+            }
+
             dbContext.Books.Add(book!);
             await dbContext.SaveChangesAsync();
             return book;
@@ -46,13 +54,25 @@ namespace LibrarySPSTApi.Services
 
         public async Task<bool> DeleteBookAsync(int id)
         {
-            var bookToDelete = await dbContext.Books.FirstOrDefaultAsync(book => book!.Id == id);
+            var bookToDelete = await dbContext.Books.FirstOrDefaultAsync(book => book.Id == id);
 
-            if (bookToDelete == null) return false;
+            if (bookToDelete == null)
+            {
+                return false;
+            }
+
+            var category = await dbContext.Categories.Include(category => category.Books).FirstOrDefaultAsync(c => c.Id == bookToDelete.CategoryId);
+
             dbContext.Books.Remove(bookToDelete);
+
+            // Check if this book was the only book in the category
+            if (category is { Books.Count: 1 } && category.Books.Contains(bookToDelete))
+            {
+                dbContext.Categories.Remove(category);
+            }
+
             await dbContext.SaveChangesAsync();
             return true;
-
         }
     }
 }

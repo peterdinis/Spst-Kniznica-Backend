@@ -8,7 +8,7 @@ public class DataContext: IdentityDbContext<ApplicationUser>
 {
     public DataContext(DbContextOptions<DataContext> options): base(options) {}
     
-    public DbSet<Category> Categories { get; set; }
+    public DbSet<Category?> Categories { get; set; }
     
     public DbSet<Teacher> Teachers { get; set; }
     
