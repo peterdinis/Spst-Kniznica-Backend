@@ -22,5 +22,7 @@ public class Author
     
     public DateTime? Death { get; set; }
     
+    public ICollection<Book> Books { get; set; }
+    
     
 }

@@ -26,5 +26,15 @@ public class Book
     public string Quantity { get; set; } = null!;
 
     public string Publisher { get; set; } = null!;
+    
+    public int CategoryId { get; set; }
+
+    // Navigation property
+    [ForeignKey("CategoryId")]
+    public Category Category { get; set; }
+
+    public int AuthorId { get; set; }
+    
+    public Author Author { get; set; }
 
 }
