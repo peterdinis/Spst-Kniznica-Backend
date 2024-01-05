@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LibrarySPSTApi.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial_Migration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -55,23 +55,21 @@ namespace LibrarySPSTApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "books",
+                name: "authors",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    AuthorName = table.Column<string>(type: "text", nullable: false),
-                    Pages = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
-                    Year = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Image = table.Column<string>(type: "text", nullable: false),
-                    Quantity = table.Column<int>(type: "integer", nullable: false)
+                    AuthorDescription = table.Column<string>(type: "text", nullable: false),
+                    AuthorImage = table.Column<string>(type: "text", nullable: false),
+                    LitPeriod = table.Column<string>(type: "text", nullable: false),
+                    Birth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Death = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_books", x => x.Id);
+                    table.PrimaryKey("PK_authors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -194,6 +192,41 @@ namespace LibrarySPSTApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "books",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    AuthorName = table.Column<string>(type: "text", nullable: false),
+                    Pages = table.Column<string>(type: "text", nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: false),
+                    Year = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Image = table.Column<string>(type: "text", nullable: false),
+                    Quantity = table.Column<string>(type: "text", nullable: false),
+                    Publisher = table.Column<string>(type: "text", nullable: false),
+                    CategoryId = table.Column<int>(type: "integer", nullable: false),
+                    AuthorId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_books", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_books_authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "authors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_books_categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -230,6 +263,16 @@ namespace LibrarySPSTApi.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_books_AuthorId",
+                table: "books",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_books_CategoryId",
+                table: "books",
+                column: "CategoryId");
         }
 
         /// <inheritdoc />
@@ -254,13 +297,16 @@ namespace LibrarySPSTApi.Migrations
                 name: "books");
 
             migrationBuilder.DropTable(
-                name: "categories");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "authors");
+
+            migrationBuilder.DropTable(
+                name: "categories");
         }
     }
 }
