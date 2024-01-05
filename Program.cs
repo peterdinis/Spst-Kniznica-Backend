@@ -66,7 +66,7 @@ builder.Services
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<JwtService>();
-builder.Services.AddScoped<AuthorService>();
+builder.Services.AddScoped<IAuthorService, AuthorService>();
 
 // Add services to the container.
 
