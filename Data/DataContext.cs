@@ -8,7 +8,7 @@ public class DataContext: IdentityDbContext<ApplicationUser>
 {
     public DataContext(DbContextOptions<DataContext> options): base(options) {}
     
-    public DbSet<Category?> Categories { get; set; }
+    public DbSet<Category> Categories { get; set; }
     
     public DbSet<Teacher> Teachers { get; set; }
     
@@ -19,4 +19,6 @@ public class DataContext: IdentityDbContext<ApplicationUser>
     public DbSet<Book> Books { get; set; }
     
     public DbSet<Author> Authors { get; set; }
+    
+    public DbSet<Booking> Bookings { get; set; }
 }
