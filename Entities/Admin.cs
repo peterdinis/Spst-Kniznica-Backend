@@ -1,6 +1,3 @@
 ﻿namespace LibrarySPSTApi.Entities;
 
-public class Admin: ApplicationUser
-{
-    
-}
+public class Admin : ApplicationUser { }

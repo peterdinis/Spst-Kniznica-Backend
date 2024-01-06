@@ -18,23 +18,22 @@ public class Book
     public string Pages { get; set; } = null!;
 
     public string Status { get; set; } = null!;
-    
+
     public DateTime Year { get; set; }
 
     public string Image { get; set; } = null!;
 
     public string Quantity { get; set; } = null!;
 
-    public string Publisher { get; set; } = null!;
-    
     public int CategoryId { get; set; }
-
-    // Navigation property
     [ForeignKey("CategoryId")]
     public Category Category { get; set; }
 
     public int AuthorId { get; set; }
-    
+    [ForeignKey("AuthorId")]
     public Author Author { get; set; }
 
+    public int PublisherId { get; set; }
+    [ForeignKey("PublisherId")]
+    public Publisher Publisher { get; set; }
 }

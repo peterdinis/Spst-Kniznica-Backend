@@ -1,10 +1,10 @@
-﻿using LibrarySPSTApi.Interfaces;
+﻿using LibrarySPSTApi.Entities;
+using LibrarySPSTApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using LibrarySPSTApi.Entities;
 
 namespace LibrarySPSTApi.Controllers
 {
-    [Route("/Categories")] 
+    [Route("/Categories")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -12,7 +12,8 @@ namespace LibrarySPSTApi.Controllers
 
         public CategoryController(ICategoryService categoryService)
         {
-            _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
+            _categoryService =
+                categoryService ?? throw new ArgumentNullException(nameof(categoryService));
         }
 
         [HttpGet]
@@ -38,7 +39,11 @@ namespace LibrarySPSTApi.Controllers
         public async Task<ActionResult<Category>> CreateCategory(Category? category)
         {
             var createdCategory = await _categoryService.CreateCategoryAsync(category);
-            return CreatedAtAction(nameof(GetCategoryById), new { id = createdCategory.Id }, createdCategory);
+            return CreatedAtAction(
+                nameof(GetCategoryById),
+                new { id = createdCategory.Id },
+                createdCategory
+            );
         }
 
         [HttpPut("{id}")]

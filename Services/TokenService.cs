@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace LibrarySPSTApi.Services;
+
 public class TokenService(UserManager<ApplicationUser> userManager, IConfiguration config)
 {
     public async Task<string> GenerateToken(ApplicationUser user)
@@ -23,7 +24,9 @@ public class TokenService(UserManager<ApplicationUser> userManager, IConfigurati
             claims.Add(new Claim(ClaimTypes.Role, role));
         }
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWTSettings:TokenKey"] ?? string.Empty));
+        var key = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(config["JWTSettings:TokenKey"] ?? string.Empty)
+        );
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
         var tokenOptions = new JwtSecurityToken(

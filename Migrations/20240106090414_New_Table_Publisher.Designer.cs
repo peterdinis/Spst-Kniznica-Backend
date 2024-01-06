@@ -3,6 +3,7 @@ using System;
 using LibrarySPSTApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LibrarySPSTApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240106090414_New_Table_Publisher")]
+    partial class New_Table_Publisher
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,8 +175,9 @@ namespace LibrarySPSTApi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PublisherId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Publisher")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Quantity")
                         .IsRequired()
@@ -192,8 +196,6 @@ namespace LibrarySPSTApi.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("PublisherId");
-
                     b.ToTable("books");
                 });
 
@@ -208,12 +210,6 @@ namespace LibrarySPSTApi.Migrations
                     b.Property<string>("BookName")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<DateTime>("From")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("To")
-                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -425,17 +421,9 @@ namespace LibrarySPSTApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LibrarySPSTApi.Entities.Publisher", "Publisher")
-                        .WithMany("Books")
-                        .HasForeignKey("PublisherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Author");
 
                     b.Navigation("Category");
-
-                    b.Navigation("Publisher");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -495,11 +483,6 @@ namespace LibrarySPSTApi.Migrations
                 });
 
             modelBuilder.Entity("LibrarySPSTApi.Entities.Category", b =>
-                {
-                    b.Navigation("Books");
-                });
-
-            modelBuilder.Entity("LibrarySPSTApi.Entities.Publisher", b =>
                 {
                     b.Navigation("Books");
                 });

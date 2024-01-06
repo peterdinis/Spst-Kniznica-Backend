@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using LibrarySPSTApi.Entities;
+﻿using LibrarySPSTApi.Entities;
 using LibrarySPSTApi.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LibrarySPSTApi.Controllers
 {
     [ApiController]
-    [Route("/Books")] 
+    [Route("/Books")]
     public class BookController : ControllerBase
     {
         private readonly IBookService _bookService;
