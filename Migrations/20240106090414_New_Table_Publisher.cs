@@ -13,23 +13,28 @@ namespace LibrarySPSTApi.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "publishers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false)
-                },
+                columns: table =>
+                    new
+                    {
+                        Id = table
+                            .Column<int>(type: "integer", nullable: false)
+                            .Annotation(
+                                "Npgsql:ValueGenerationStrategy",
+                                NpgsqlValueGenerationStrategy.IdentityByDefaultColumn
+                            ),
+                        Name = table.Column<string>(type: "text", nullable: false)
+                    },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_publishers", x => x.Id);
-                });
+                }
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "publishers");
+            migrationBuilder.DropTable(name: "publishers");
         }
     }
 }

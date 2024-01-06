@@ -2,7 +2,8 @@
 
 namespace LibrarySPSTApi.Interfaces
 {
-    public interface IAuthorService {
+    public interface IAuthorService
+    {
         Task<IEnumerable<Author?>> GetAllAuthorsAsync();
         Task<Author?> GetAuthorByIdAsync(int id);
         Task<Author?> CreateAuthorAsync(Author author);

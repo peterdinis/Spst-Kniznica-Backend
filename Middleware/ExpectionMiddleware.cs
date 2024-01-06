@@ -3,7 +3,11 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 
-public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env)
+public class ExceptionMiddleware(
+    RequestDelegate next,
+    ILogger<ExceptionMiddleware> logger,
+    IHostEnvironment env
+)
 {
     public async Task InvokeAsync(HttpContext context)
     {
@@ -24,7 +28,10 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
                 Title = ex.Message
             };
 
-            var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
 
             var json = JsonSerializer.Serialize(response, options);
 

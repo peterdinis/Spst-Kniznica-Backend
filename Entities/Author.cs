@@ -17,12 +17,10 @@ public class Author
     public string AuthorImage { get; set; } = null!;
 
     public string LitPeriod { get; set; } = null!;
-    
+
     public DateTime Birth { get; set; }
-    
+
     public DateTime? Death { get; set; }
-    
+
     public ICollection<Book> Books { get; set; }
-    
-    
 }

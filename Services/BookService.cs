@@ -1,7 +1,7 @@
 ﻿using LibrarySPSTApi.Data;
-using Microsoft.EntityFrameworkCore;
 using LibrarySPSTApi.Entities;
 using LibrarySPSTApi.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibrarySPSTApi.Services
 {
@@ -9,22 +9,25 @@ namespace LibrarySPSTApi.Services
     {
         public async Task<IEnumerable<Book?>> GetAllBooksAsync()
         {
-            return await dbContext.Books.Include(book =>book.Category).ToListAsync();
+            return await dbContext.Books.Include(book => book.Category).ToListAsync();
         }
 
         public async Task<Book?> GetBookByIdAsync(int id)
         {
-            return await dbContext.Books.FirstOrDefaultAsync(book => book!.Id == id)! ?? throw new InvalidOperationException("Book not found");
+            return await dbContext.Books.FirstOrDefaultAsync(book => book!.Id == id)!
+                ?? throw new InvalidOperationException("Book not found");
         }
 
         public async Task<Book?> AddBookAsync(Book? book)
         {
             // Check if the category associated with the book exists
-            var categoryExists = await dbContext.Categories.AnyAsync(c => book != null && c.Id == book.CategoryId);
+            var categoryExists = await dbContext.Categories.AnyAsync(
+                c => book != null && c.Id == book.CategoryId
+            );
 
             if (!categoryExists)
             {
-                return null; 
+                return null;
             }
 
             dbContext.Books.Add(book!);
@@ -32,10 +35,12 @@ namespace LibrarySPSTApi.Services
             return book;
         }
 
-        public async Task < Book > UpdateBookAsync(int id, Book book) {
+        public async Task<Book> UpdateBookAsync(int id, Book book)
+        {
             var existingBook = await dbContext.Books.FirstOrDefaultAsync(b => b.Id == id);
 
-            if (existingBook == null) return existingBook!;
+            if (existingBook == null)
+                return existingBook!;
 
             // Update properties other than Id
             existingBook.Name = book.Name;
@@ -61,7 +66,9 @@ namespace LibrarySPSTApi.Services
                 return false;
             }
 
-            var category = await dbContext.Categories.Include(category => category.Books).FirstOrDefaultAsync(c => c.Id == bookToDelete.CategoryId);
+            var category = await dbContext
+                .Categories.Include(category => category.Books)
+                .FirstOrDefaultAsync(c => c.Id == bookToDelete.CategoryId);
 
             dbContext.Books.Remove(bookToDelete);
 
