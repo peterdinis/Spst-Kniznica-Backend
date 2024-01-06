@@ -21,4 +21,6 @@ public class DataContext: IdentityDbContext<ApplicationUser>
     public DbSet<Author> Authors { get; set; }
     
     public DbSet<Booking> Bookings { get; set; }
+    
+    public DbSet<Publisher> Publishers { get; set; }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LibrarySPSTApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a067cecb76c97d43fa5d6a3310fd571d0813f52c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e6843cba240a19f06c82c5f5e7644c76ae4f1f6d")]
 [assembly: System.Reflection.AssemblyProductAttribute("LibrarySPSTApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LibrarySPSTApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
