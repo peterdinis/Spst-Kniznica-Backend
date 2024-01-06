@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(
-        name: MyAllowSpecificOrigins,
+        name: myAllowSpecificOrigins,
         policy =>
         {
             policy.WithOrigins("http://localhost:3000");
@@ -117,7 +117,7 @@ builder.Services.AddDbContext<DataContext>(
 );
 
 var app = builder.Build();
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors(myAllowSpecificOrigins);
 app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
